@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "AV-Yzv8cgNN0wcwlSZ9n",
+    "_type": "dashboard",
+    "_source": {
+      "title": "F5_Request_Logging",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":7,\"id\":\"AV-YzgFzgNN0wcwlSZ9k\",\"panelIndex\":1,\"row\":5,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":10,\"id\":\"AV-Y2Nh6gNN0wcwlSZ-A\",\"panelIndex\":2,\"row\":26,\"size_x\":3,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"AV-Ze6KjgNN0wcwlSaC4\",\"panelIndex\":5,\"row\":26,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":9,\"id\":\"AV-ZnHDMgNN0wcwlSaJM\",\"panelIndex\":6,\"row\":1,\"size_x\":4,\"size_y\":2,\"type\":\"visualization\"},{\"col\":1,\"id\":\"AV-ZvaH2gNN0wcwlSaMO\",\"panelIndex\":7,\"row\":14,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":7,\"id\":\"AV-Z0jcJgNN0wcwlSaOC\",\"panelIndex\":8,\"row\":14,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"AV_mWT9NtzVZhbjXBKMJ\",\"panelIndex\":11,\"row\":5,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":8,\"id\":\"AV_mrkcVtzVZhbjXBKQx\",\"panelIndex\":12,\"row\":8,\"size_x\":5,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"AV_m7MQptzVZhbjXBKXO\",\"panelIndex\":13,\"row\":23,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"},{\"col\":5,\"id\":\"AV_m7qintzVZhbjXBKXP\",\"panelIndex\":14,\"row\":23,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"},{\"col\":9,\"id\":\"AV_m8CnLtzVZhbjXBKXQ\",\"panelIndex\":15,\"row\":23,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"},{\"col\":10,\"id\":\"AV_m8mUMtzVZhbjXBKXR\",\"panelIndex\":16,\"row\":17,\"size_x\":3,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"AV_nC-wmtzVZhbjXBKiD\",\"panelIndex\":17,\"row\":1,\"size_x\":8,\"size_y\":4,\"type\":\"visualization\"},{\"col\":7,\"id\":\"AV_nHL_KtzVZhbjXBKmu\",\"panelIndex\":18,\"row\":26,\"size_x\":3,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"AV_pG4kotzVZhbjXBKqA\",\"panelIndex\":19,\"row\":20,\"size_x\":8,\"size_y\":3,\"type\":\"visualization\"},{\"col\":6,\"id\":\"AWAFDeGJPAYiU8N0oSpj\",\"panelIndex\":20,\"row\":17,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"AWAFe7efPAYiU8N0oSxg\",\"panelIndex\":21,\"row\":17,\"size_x\":5,\"size_y\":3,\"type\":\"visualization\"},{\"col\":9,\"id\":\"AWAGBYfbPAYiU8N0oTFr\",\"panelIndex\":22,\"row\":3,\"size_x\":4,\"size_y\":2,\"type\":\"visualization\"},{\"col\":1,\"id\":\"AWAGEzhgPAYiU8N0oTJs\",\"panelIndex\":23,\"row\":8,\"size_x\":7,\"size_y\":3,\"type\":\"visualization\"},{\"col\":9,\"id\":\"AWAGf0ghPAYiU8N0oTN6\",\"panelIndex\":24,\"row\":20,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"AWAGmxDIPAYiU8N0oTZK\",\"panelIndex\":25,\"row\":11,\"size_x\":12,\"size_y\":3,\"type\":\"visualization\"}]",
+      "optionsJSON": "{\"darkTheme\":true}",
+      "uiStateJSON": "{\"P-17\":{\"mapCenter\":[38.8225909761771,24.960937499999996],\"mapZoom\":2},\"P-20\":{\"spy\":{\"mode\":{\"fill\":false,\"name\":null}}},\"P-6\":{\"vis\":{\"defaultColors\":{\"0 - 0\":\"rgb(0,104,55)\"}}}}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-30m",
+      "refreshInterval": {
+        "display": "Off",
+        "pause": false,
+        "value": 0
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"match_all\":{}}}],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]
