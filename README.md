@@ -11,3 +11,4 @@ F5 HSL与ELK结合demo，实现
 
 https://www.myf5.net
 
+ For F5 internal staffs, pls check this link https://gitlab.es.f5net.com/jlin/elk-image/blob/master/README.MD in case you are using my vm image directly.
