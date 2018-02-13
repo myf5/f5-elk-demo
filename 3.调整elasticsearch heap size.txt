@@ -1,0 +1,33 @@
+###调整elasticsearch heap size
+
+vi /etc/elasticsearch/jvm.options
+
+
+################################################################
+## IMPORTANT: JVM heap size
+################################################################
+##
+## You should always set the min and max JVM heap
+## size to the same value. For example, to set
+## the heap to 4 GB, set:
+##
+## -Xms4g
+## -Xmx4g
+##
+## See https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
+## for more information
+##
+################################################################
+
+# Xms represents the initial size of total heap space
+# Xmx represents the maximum size of total heap space
+
+-Xms2g
+-Xmx2g
+
+根据物理内存大小，设置ms,mx为物理内存的一半值，例如16G物理内存，则
+-Xms8g
+-Xmx8g
+
+
+修改后，重启elasticsearch服务
