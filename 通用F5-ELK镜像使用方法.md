@@ -202,3 +202,7 @@ $CLIENT_IP ${X-Forwarded-For} $DATE_NCSA $VIRTUAL_IP $VIRTUAL_NAME $VIRTUAL_POOL
 4. 其它未尽事项，请参考<https://gitlab.es.f5net.com/jlin/elk-image/blob/master/README.MD>以及https://github.com/myf5/f5-elk-demo/
 5. 配置多台ELK cluster，多个logstash作为HSL服务器情形，需自行研究
 6. 镜像挂远端存储方式，需自行设置
+
+## 通用版demo截图
+
+<img src="https://github.com/myf5/f5-elk-demo/blob/master/Screenshot-2018-2-14%20F5_Request_Logging%20-%20Kibana.png?raw=true">
