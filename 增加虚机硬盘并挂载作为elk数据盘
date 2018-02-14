@@ -1,0 +1,346 @@
+[root@F5ELK-NODE01 ~]# fdisk -l
+
+Disk /dev/sda: 21.5 GB, 21474836480 bytes, 41943040 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: dos
+Disk identifier: 0x000526a6
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        2048     1026047      512000   83  Linux
+/dev/sda2         1026048    41943039    20458496   8e  Linux LVM
+
+Disk /dev/sdb: 53.7 GB, 53687091200 bytes, 104857600 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/centos-root: 18.8 GB, 18756927488 bytes, 36634624 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/centos-swap: 2147 MB, 2147483648 bytes, 4194304 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+
+
+
+[root@F5ELK-NODE01 ~]# fdisk /dev/sdb
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0xf01006b1.
+
+Command (m for help): m
+Command action
+   a   toggle a bootable flag
+   b   edit bsd disklabel
+   c   toggle the dos compatibility flag
+   d   delete a partition
+   g   create a new empty GPT partition table
+   G   create an IRIX (SGI) partition table
+   l   list known partition types
+   m   print this menu
+   n   add a new partition
+   o   create a new empty DOS partition table
+   p   print the partition table
+   q   quit without saving changes
+   s   create a new empty Sun disklabel
+   t   change a partition's system id
+   u   change display/entry units
+   v   verify the partition table
+   w   write table to disk and exit
+   x   extra functionality (experts only)
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1): 
+First sector (2048-104857599, default 2048): 
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-104857599, default 104857599): 
+Using default value 104857599
+Partition 1 of type Linux and of size 50 GiB is set
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+
+
+
+
+
+
+[root@F5ELK-NODE01 ~]# fdisk /dev/sdb
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): m
+Command action
+   a   toggle a bootable flag
+   b   edit bsd disklabel
+   c   toggle the dos compatibility flag
+   d   delete a partition
+   g   create a new empty GPT partition table
+   G   create an IRIX (SGI) partition table
+   l   list known partition types
+   m   print this menu
+   n   add a new partition
+   o   create a new empty DOS partition table
+   p   print the partition table
+   q   quit without saving changes
+   s   create a new empty Sun disklabel
+   t   change a partition's system id
+   u   change display/entry units
+   v   verify the partition table
+   w   write table to disk and exit
+   x   extra functionality (experts only)
+
+Command (m for help): t
+Selected partition 1
+Hex code (type L to list all codes): L
+
+ 0  Empty           24  NEC DOS         81  Minix / old Lin bf  Solaris        
+ 1  FAT12           27  Hidden NTFS Win 82  Linux swap / So c1  DRDOS/sec (FAT-
+ 2  XENIX root      39  Plan 9          83  Linux           c4  DRDOS/sec (FAT-
+ 3  XENIX usr       3c  PartitionMagic  84  OS/2 hidden C:  c6  DRDOS/sec (FAT-
+ 4  FAT16 <32M      40  Venix 80286     85  Linux extended  c7  Syrinx         
+ 5  Extended        41  PPC PReP Boot   86  NTFS volume set da  Non-FS data    
+ 6  FAT16           42  SFS             87  NTFS volume set db  CP/M / CTOS / .
+ 7  HPFS/NTFS/exFAT 4d  QNX4.x          88  Linux plaintext de  Dell Utility   
+ 8  AIX             4e  QNX4.x 2nd part 8e  Linux LVM       df  BootIt         
+ 9  AIX bootable    4f  QNX4.x 3rd part 93  Amoeba          e1  DOS access     
+ a  OS/2 Boot Manag 50  OnTrack DM      94  Amoeba BBT      e3  DOS R/O        
+ b  W95 FAT32       51  OnTrack DM6 Aux 9f  BSD/OS          e4  SpeedStor      
+ c  W95 FAT32 (LBA) 52  CP/M            a0  IBM Thinkpad hi eb  BeOS fs        
+ e  W95 FAT16 (LBA) 53  OnTrack DM6 Aux a5  FreeBSD         ee  GPT            
+ f  W95 Ext'd (LBA) 54  OnTrackDM6      a6  OpenBSD         ef  EFI (FAT-12/16/
+10  OPUS            55  EZ-Drive        a7  NeXTSTEP        f0  Linux/PA-RISC b
+11  Hidden FAT12    56  Golden Bow      a8  Darwin UFS      f1  SpeedStor      
+12  Compaq diagnost 5c  Priam Edisk     a9  NetBSD          f4  SpeedStor      
+14  Hidden FAT16 <3 61  SpeedStor       ab  Darwin boot     f2  DOS secondary  
+16  Hidden FAT16    63  GNU HURD or Sys af  HFS / HFS+      fb  VMware VMFS    
+17  Hidden HPFS/NTF 64  Novell Netware  b7  BSDI fs         fc  VMware VMKCORE 
+18  AST SmartSleep  65  Novell Netware  b8  BSDI swap       fd  Linux raid auto
+1b  Hidden W95 FAT3 70  DiskSecure Mult bb  Boot Wizard hid fe  LANstep        
+1c  Hidden W95 FAT3 75  PC/IX           be  Solaris boot    ff  BBT            
+1e  Hidden W95 FAT1 80  Old Minix      
+Hex code (type L to list all codes): 8e  
+Changed type of partition 'Linux' to 'Linux LVM'
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+[root@F5ELK-NODE01 ~]# pvcreate /dev/sdb1
+
+[root@F5ELK-NODE01 ~]# pvdisplay 
+  --- Physical volume ---
+  PV Name               /dev/sda2
+  VG Name               centos
+  PV Size               19.51 GiB / not usable 3.00 MiB
+  Allocatable           yes 
+  PE Size               4.00 MiB
+  Total PE              4994
+  Free PE               10
+  Allocated PE          4984
+  PV UUID               95VneK-rLP3-v2fO-Ti43-cJgS-l1Tb-eDQs7w
+   
+  "/dev/sdb1" is a new physical volume of "<50.00 GiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/sdb1
+  VG Name               
+  PV Size               <50.00 GiB
+  Allocatable           NO
+  PE Size               0   
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               yWUXim-oBz4-tj6n-YzTa-zd1m-YzZs-yE3Igg
+   
+
+
+   [root@F5ELK-NODE01 ~]# vgcreate bigdatavg1 /dev/sdb1
+  Volume group "bigdatavg1" successfully created
+[root@F5ELK-NODE01 ~]# 
+[root@F5ELK-NODE01 ~]# vgdisplay 
+  --- Volume group ---
+  VG Name               centos
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  3
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               1
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               <19.51 GiB
+  PE Size               4.00 MiB
+  Total PE              4994
+  Alloc PE / Size       4984 / <19.47 GiB
+  Free  PE / Size       10 / 40.00 MiB
+  VG UUID               IT1xIx-fQFM-ocAq-fiqH-MNfj-BqSw-S2m51Z
+   
+  --- Volume group ---
+  VG Name               bigdatavg1
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               <50.00 GiB
+  PE Size               4.00 MiB
+  Total PE              12799
+  Alloc PE / Size       0 / 0   
+  Free  PE / Size       12799 / <50.00 GiB
+  VG UUID               t1HEeR-yMJi-86Ef-kl4s-2D4x-i47M-HAGIzA
+
+
+
+
+
+  [root@F5ELK-NODE01 ~]# lvcreate -l 12799 -n bigdatalv1 bigdatavg1
+  Logical volume "bigdatalv1" created.
+[root@F5ELK-NODE01 ~]# 
+[root@F5ELK-NODE01 ~]# 
+[root@F5ELK-NODE01 ~]# lvdisplay 
+  --- Logical volume ---
+  LV Path                /dev/centos/swap
+  LV Name                swap
+  VG Name                centos
+  LV UUID                LH7KSi-o87B-aMDz-2GBW-T53R-73Dk-6QDZPg
+  LV Write Access        read/write
+  LV Creation host, time localhost.localdomain, 2016-07-26 12:00:02 +0800
+  LV Status              available
+  # open                 0
+  LV Size                2.00 GiB
+  Current LE             512
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:1
+   
+  --- Logical volume ---
+  LV Path                /dev/centos/root
+  LV Name                root
+  VG Name                centos
+  LV UUID                Fdnm2m-xZIJ-hJyB-t57l-5hBX-3qwv-gaWro6
+  LV Write Access        read/write
+  LV Creation host, time localhost.localdomain, 2016-07-26 12:00:02 +0800
+  LV Status              available
+  # open                 1
+  LV Size                <17.47 GiB
+  Current LE             4472
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:0
+   
+  --- Logical volume ---
+  LV Path                /dev/bigdatavg1/bigdatalv1
+  LV Name                bigdatalv1
+  VG Name                bigdatavg1
+  LV UUID                UvXCBL-QqAd-KzTX-vjn7-30eU-SAfU-qe9c61
+  LV Write Access        read/write
+  LV Creation host, time F5ELK-NODE01.myf5.net, 2018-02-14 12:35:50 +0800
+  LV Status              available
+  # open                 0
+  LV Size                <50.00 GiB
+  Current LE             12799
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+   
+
+
+[root@F5ELK-NODE01 ~]# mkfs.xfs  /dev/bigdatavg1/bigdatalv1
+meta-data=/dev/bigdatavg1/bigdatalv1 isize=512    agcount=4, agsize=3276544 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=13106176, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=6399, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+
+
+
+[root@F5ELK-NODE01 /]# mount  /dev/bigdatavg1/bigdatalv1 /elkbigdata/
+[root@F5ELK-NODE01 /]# df -h
+Filesystem                         Size  Used Avail Use% Mounted on
+/dev/mapper/centos-root             18G  2.7G   15G  15% /
+devtmpfs                           2.9G     0  2.9G   0% /dev
+tmpfs                              3.0G     0  3.0G   0% /dev/shm
+tmpfs                              3.0G  8.7M  2.9G   1% /run
+tmpfs                              3.0G     0  3.0G   0% /sys/fs/cgroup
+/dev/sda1                          497M  167M  331M  34% /boot
+tmpfs                              596M     0  596M   0% /run/user/0
+/dev/mapper/bigdatavg1-bigdatalv1   50G   33M   50G   1% /elkbigdata
+
+
+[root@F5ELK-NODE01 /]# cat /etc/fstab 
+
+#
+# /etc/fstab
+# Created by anaconda on Tue Jul 26 12:00:03 2016
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=b3bcc381-9cc2-4601-9210-d38158cf43da /boot                   xfs     defaults        0 0
+#/dev/mapper/centos-swap swap                    swap    defaults        0 0
+
+
+
+
+[root@F5ELK-NODE01 /]# vi /etc/fstab 
+
+#
+# /etc/fstab
+# Created by anaconda on Tue Jul 26 12:00:03 2016
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+/dev/mapper/bigdatavg1-bigdatalv1 /elkbigdata   xfs     defaults        0 0
+UUID=b3bcc381-9cc2-4601-9210-d38158cf43da /boot                   xfs     defaults        0 0
+#/dev/mapper/centos-swap swap                    swap    defaults        0 0
+
