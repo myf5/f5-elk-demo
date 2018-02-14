@@ -183,7 +183,16 @@ output {
 7. 当前内置的dashboard是基于一个应用（所有VS）视角来配置，多个应用混合到一个dashboard中也可以，但某些可视图需要调整（这类图一般因为检索会和具体VS强耦合）
 8. 缺省试图之外的需求，需自行定义
 
+## F5配置
 
+1. 参考https://www.myf5.net/post/2491.htm中关于F5配置的提示，其中template配置填入以下内容（不换行）
+
+```
+$CLIENT_IP ${X-Forwarded-For} $DATE_NCSA $VIRTUAL_IP $VIRTUAL_NAME $VIRTUAL_POOL_NAME $SERVER_IP $SERVER_PORT "$HTTP_PATH" "$HTTP_REQUEST" $HTTP_STATCODE $RESPONSE_SIZE $RESPONSE_MSECS "$Referer" "${User-agent}"
+```
+
+2. logstash, 监听接口为 **TCP 8514**
+3. 应使得数据发送使用TMM业务口，不要使用管理口
 
 ## 其它注意事项
 
@@ -191,3 +200,4 @@ output {
 2. 图形界面查看elasticsearch时候，请切勿删除   ***.kibana***  这个index
 3. 如需删除某个index，点击对应index上部的 Actions 下拉按钮，并点击删除。请切勿删除   ***.kibana***  这个index
 4. 其它未尽事项，请参考<https://gitlab.es.f5net.com/jlin/elk-image/blob/master/README.MD>以及https://github.com/myf5/f5-elk-demo/
+5. 配置多台ELK cluster，多个logstahs作为HSL服务器情形，请自行研究
