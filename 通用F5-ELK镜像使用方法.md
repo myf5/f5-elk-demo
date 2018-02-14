@@ -196,9 +196,9 @@ $CLIENT_IP ${X-Forwarded-For} $DATE_NCSA $VIRTUAL_IP $VIRTUAL_NAME $VIRTUAL_POOL
 
 ## 其它注意事项
 
-1. ELK机器为单节点，未配置cluster，如果需cluster配置，请参考ELK网站文档或自行google
+1. ELK机器为单节点，未配置cluster
 2. 图形界面查看elasticsearch时候，请切勿删除   ***.kibana***  这个index
 3. 如需删除某个index，点击对应index上部的 Actions 下拉按钮，并点击删除。请切勿删除   ***.kibana***  这个index
 4. 其它未尽事项，请参考<https://gitlab.es.f5net.com/jlin/elk-image/blob/master/README.MD>以及https://github.com/myf5/f5-elk-demo/
-5. 配置多台ELK cluster，多个logstahs作为HSL服务器情形，请自行研究
-6. 镜像挂远端存储方式，请自行设置
+5. 配置多台ELK cluster，多个logstash作为HSL服务器情形，需自行研究
+6. 镜像挂远端存储方式，需自行设置
