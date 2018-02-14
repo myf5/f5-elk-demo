@@ -185,7 +185,7 @@ output {
 
 ## F5配置
 
-1. 参考https://www.myf5.net/post/2491.htm中关于F5配置的提示，其中template配置填入以下内容（不换行）
+1. 参考https://www.myf5.net/post/2491.htm 中关于F5配置的提示，其中template配置填入以下内容（不换行）
 
 ```
 $CLIENT_IP ${X-Forwarded-For} $DATE_NCSA $VIRTUAL_IP $VIRTUAL_NAME $VIRTUAL_POOL_NAME $SERVER_IP $SERVER_PORT "$HTTP_PATH" "$HTTP_REQUEST" $HTTP_STATCODE $RESPONSE_SIZE $RESPONSE_MSECS "$Referer" "${User-agent}"
