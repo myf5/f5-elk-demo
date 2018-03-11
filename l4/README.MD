@@ -290,9 +290,7 @@ when SERVER_DATA {
 
 * 创建相关可视化试图，并建立一个独立的dashboard。首包响应延迟关键字段为`init-delay`. 服务器连续响应包延迟采样字段为`svr-pkts-delay`
 
-
-
-####注意：
+#### 注意： 
 
 * 以上irule等内容仅在本repro内支持，有任何问题请在这里提交issue
 * 如果你修复或增强了irule功能，欢迎提交PR
