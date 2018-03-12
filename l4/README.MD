@@ -354,7 +354,7 @@ when SERVER_DATA {
 
 * 进入kibana-management-创建新index partern:` f5-l4-*` ，获取一定量数据后，刷新该index
 
-* 创建相关可视化试图，并建立一个独立的dashboard。首包响应延迟关键字段为`init-delay`. 服务器连续响应包延迟采样字段为`svr-pkts-delay`
+* 创建相关可视化试图，并建立一个独立的dashboard。三次握手delay关键字段`hs-delay`首包响应延迟关键字段为`init-delay`. 服务器连续响应包延迟采样字段为`svr-pkts-delay`
 
 #### 注意： 
 
