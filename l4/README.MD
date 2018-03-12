@@ -8,7 +8,7 @@
 
 * 握手延迟：TCP三次握手中，服务器SYN+ACK的响应延迟
 * 首包响应延迟：服务器对客户端每个发送数据的首包响应延迟，该数据持续跟踪在一个tcp链接中，每次客户端发送tcp数据后，服务器的第一个响应数据到达F5的延迟，通过统计该数据可以有效发现后端服务器在对一个连接的整个响应过程中延迟状态。
-* 连续响应包之间延迟: 如果服务器连续返回数据，则计算两个响应包之间的延迟，irule容许设置采样间隔，即每连续响应多少个包采样一次间隔
+* 连续响应包之间延迟: 如果服务器连续返回数据，则计算两个响应包之间的延迟，irule允许设置采样间隔，即每连续响应多少个包采样一次间隔
 
 
 
@@ -132,8 +132,7 @@ when SERVER_DATA {
 * 拷贝以下elasticsearch template文件，并执行命令更新：
 
   ```json
-  [root@F5ELK-NODE01 confbak]# vi f5-l4_template.json
-
+  [root@F5ELK-NODE01 confbak]# cat f5-l4_template.json 
   {
   "template": "f5-l4-*",
   "mappings": {
@@ -185,6 +184,40 @@ when SERVER_DATA {
   "properties": {
   "ip": {
   "type": "ip"
+  },
+  "location": {
+  "type": "geo_point"
+  },
+  "latitude": {
+  "type": "half_float"
+  },
+  "longitude": {
+  "type": "half_float"
+  }
+  }
+  },
+  "geoipresponse": {
+  "dynamic": true,
+  "properties": {
+  "ip": {
+  "type": "ip"
+  },
+  "location": {
+  "type": "geo_point"
+  },
+  "latitude": {
+  "type": "half_float"
+  },
+  "longitude": {
+  "type": "half_float"
+  }
+  }
+  }
+  }
+  }
+  },
+  "aliases": { }
+  }
 
   ```
 
