@@ -85,7 +85,6 @@ when SERVER_DATA {
         if {($cd >= 1) and ($cdf == 1) }{
         # If client sends several continuous data, then server respond. The delay will be the time between the server data and the last client data
         # If it is a big client data, this may cause false positive. You can check client data number as reference.
-        # If the cd number is bigger (like > 10), then you can safely ignore it if the delay value is bigger.
             if {($static::debug == 1)} {
                 log local0. "$client_remote $client_local $server_local $server_remote sd number: $sd, ========The delay of initial response packet: [expr {$server_data_time-$client_data_time}]"
             }
