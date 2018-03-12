@@ -4,8 +4,9 @@
 
 <img src="https://github.com/myf5/f5-elk-demo/blob/master/l4/Screenshot-2018-3-11%20L4_Dashboard%20-%20Kibana.png?raw=true">
 
-在本例中，irule采集了首包响应延迟以及连续响应包情形下两包之间的延迟（采样）
+在本例中，irule采集了握手延迟，首包响应延迟以及连续响应包情形下两包之间的延迟（采样）
 
+* 握手延迟：TCP三次握手中，服务器SYN+ACK的响应延迟
 * 首包响应延迟：服务器对客户端每个发送数据的首包响应延迟，该数据持续跟踪在一个tcp链接中，每次客户端发送tcp数据后，服务器的第一个响应数据到达F5的延迟，通过统计该数据可以有效发现后端服务器在对一个连接的整个响应过程中延迟状态。
 * 连续响应包之间延迟: 如果服务器连续返回数据，则计算两个响应包之间的延迟，irule容许设置采样间隔，即每连续响应多少个包采样一次间隔
 
@@ -15,7 +16,7 @@
 
 ```tcl
 when RULE_INIT {
-# V1.0. 
+# V1.1. 
 #Pls check https://github.com/myf5/f5-elk-demo/l4 for updated version
 #This irule work ONLY FOR L4 TYPE VS,DON NOT USE FOR STD VS
 #Any question pls create issue on the github,Will be best effort support. Welcome PR if you had enhenced/fixed it.
@@ -27,18 +28,19 @@ set static::interval 5
 #You need create a LTM pool named as below pool name, here is logstash-pool_8515
 set static::hslpool "logstash-pool_8515"
 # set it to 1 in case you need debug
-set static::debug 0
+set static::debug 1
 }
 when CLIENT_ACCEPTED {
     set cd 0
     set sd 0
     set server_data_time_last 0
     set skip 0
+    set hsf 1
     set hsl [HSL::open -proto TCP -pool $static::hslpool]
     set client_remote "[IP::client_addr] [TCP::client_port]"
     set client_local  "[IP::local_addr clientside] [TCP::local_port clientside]"
     if {($static::debug == 1)} {
-        log local0. "$client_remote $client_local SYN is coming"
+        log local0. "$client_remote $client_local SYN is coming. [clock clicks -milliseconds]"
     }
 }
 
@@ -51,6 +53,9 @@ when CLIENT_DATA {
     if {($static::debug == 1)} {
         log local0. "$client_remote $client_local cd number: $cd, Client data fired,client data time is $client_data_time"
     }
+    if {($hsf == 1)}{
+        set cd 0
+    }
 }
 
 
@@ -60,29 +65,45 @@ when SERVER_DATA {
     set server_data_time [clock clicks -milliseconds]
     set server_local  "[IP::local_addr] [TCP::local_port]"
     set server_remote "[IP::server_addr] [TCP::server_port]"
-    if {($static::debug == 1)} {
-        log local0. "$client_remote $client_local $server_local $server_remote sd number: $sd, Server data fired,server data time is $server_data_time"
-    }
-    if {($cd > 2) and ($cdf == 1) }{
+    if {($hsf == 1)}{
         if {($static::debug == 1)} {
-            log local0. "$client_remote $client_local $server_local $server_remote sd number: $sd, ===========The delay of initial response packet: [expr {$server_data_time-$client_data_time}]================"
+            log local0. "$client_remote $client_local $server_local $server_remote sd number: $sd,Server data fired,This is TCP 3HS! server data time is $server_data_time"
+            log local0. "The 3HS delay is [expr {$server_data_time-$client_data_time}]"
         }
-        set elkdata "$client_remote $client_local $server_local $server_remote init-delay [expr {$server_data_time-$client_data_time}]\n"
+        set elkdata "$client_remote $client_local $server_local $server_remote HS-delay [expr {$server_data_time-$client_data_time}]\n"
         HSL::send $hsl $elkdata
+        set hsf 0
         set cd 0
         set sd 0
         set cdf 0
-    }
-    if {($sdf > 1) and ($cdf == 0) and ([expr {$sd%$static::interval}] == 0)}{
-        set sd_latency [expr {$server_data_time-$server_data_time_last}]
+    } else {
         if {($static::debug == 1)} {
-            log local0. "$client_remote $client_local $server_local $server_remote .server data delay from the last server data:$sd_latency"
+            log local0. "$client_remote $client_local $server_local $server_remote sd number: $sd, Server data fired,server data time is $server_data_time"
         }
-        set elkdata "$client_remote $client_local $server_local $server_remote svr-pkts-delay $sd_latency\n"
-        HSL::send $hsl $elkdata
+        if {($cd >= 1) and ($cdf == 1) }{
+        # If client sends several continuous data, then server respond. The delay will be the time between the server data and the last client data
+        # If it is a big client data, this may cause false positive. You can check client data number as reference.
+        # If the cd number is bigger (like > 10), then you can safely ignore it if the delay value is bigger.
+            if {($static::debug == 1)} {
+                log local0. "$client_remote $client_local $server_local $server_remote sd number: $sd, ========The delay of initial response packet: [expr {$server_data_time-$client_data_time}]"
+            }
+            set elkdata "$client_remote $client_local $server_local $server_remote cdnumber $cd init-delay [expr {$server_data_time-$client_data_time}]\n"
+            HSL::send $hsl $elkdata
+            set cd 0
+            set sd 0
+            set cdf 0
+        }
+        if {($sdf > 1) and ($cdf == 0) and ([expr {$sd%$static::interval}] == 0)}{
+            set sd_latency [expr {$server_data_time-$server_data_time_last}]
+            if {($static::debug == 1)} {
+                log local0. "$client_remote $client_local $server_local $server_remote .========server data delay from the last server data:$sd_latency"
+            }
+            set elkdata "$client_remote $client_local $server_local $server_remote svr-pkts-delay $sd_latency\n"
+            HSL::send $hsl $elkdata
+         }
+        set skip 0
+        set server_data_time_last $server_data_time
     }
-    set skip 0
-    set server_data_time_last $server_data_time
 }
 ```
 
@@ -176,7 +197,6 @@ when SERVER_DATA {
 * 拷贝以下logstash配置文件到/etc/logstash/conf.d 目录下
 
   ```
-  [root@F5ELK-NODE01 conf.d]# cat f5-l4-logging.conf 
   input {
     tcp {
       port => 8515
@@ -188,14 +208,25 @@ when SERVER_DATA {
   filter {
     if [message]=~ 'init-delay' {
         grok {
-          match => { "message" => "%{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} init-delay %{NUMBER:init-delay:int}" }
+          match => { "message" => "%{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} cdnumber %{NUMBER:cdnumber:int} init-delay %{NUMBER:init-delay:int}" }
       } 
 
-    } else {
+    } 
+    
+    if [message]=~ 'HS-delay' { 
+
+        grok {
+          match => { "message" => "%{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} HS-delay %{NUMBER:hs-delay:int}" }
+      }
+
+
+   } 
+
+   if [message]=~ 'svr-pkts-delay'  {
         grok {
           match => { "message" => "%{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} svr-pkts-delay %{NUMBER:svr-pkts-delay:int}" }
       }
-      }
+     }
     geoip {
           source => "clientip"
           target => "geoip"
@@ -280,7 +311,7 @@ when SERVER_DATA {
 
   注意两个文件output部分的判断条件
 
-  另：为了防止大量的连接连接到logstashs上，上述两个logstash配置了不同的监听端口
+  另：为了防止大量的连接连接到logstash上，上述两个logstash配置了不同的监听端口
 
 * 重启logstash 服务
 

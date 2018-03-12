@@ -1,5 +1,201 @@
 [
   {
+    "_id": "AV-YzgFzgNN0wcwlSZ9k",
+    "_type": "visualization",
+    "_source": {
+      "title": "实时服务器响应延迟",
+      "visState": "{\"title\":\"实时服务器响应延迟\",\"type\":\"line\",\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"@timestamp per 5 seconds\"},\"type\":\"category\"}],\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"},\"valueAxis\":null},\"legendPosition\":\"top\",\"seriesParams\":[{\"data\":{\"id\":\"2\",\"label\":\"Avg. Response/Server\"},\"drawLinesBetweenPoints\":true,\"interpolate\":\"cardinal\",\"lineWidth\":2,\"mode\":\"stacked\",\"show\":true,\"showCircles\":true,\"type\":\"line\",\"valueAxis\":\"ValueAxis-1\"}],\"times\":[],\"type\":\"histogram\",\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Avg. Response/Server\"},\"type\":\"value\"}]},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"response_ms\",\"customLabel\":\"Avg. Response/Server\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"s\",\"customInterval\":\"1m\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"server.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"2\",\"customLabel\":\"\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AV-YYJCYgNN0wcwlSZzP\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIVWQeSoz5dPjfN8nji",
+    "_type": "visualization",
+    "_source": {
+      "title": "应用实时服务器连续响应延迟采样（每10包）",
+      "visState": "{\"title\":\"应用实时服务器连续响应延迟采样（每10包）\",\"type\":\"timelion\",\"params\":{\"type\":\"timelion\",\"expression\":\".es(metric='min:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"最小连续响应延迟\\\"),.es(metric='max:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"最大连续响应延迟\\\"),.es(metric='avg:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"平均连续响应延迟\\\"),\",\"interval\":\"1s\"},\"aggs\":[],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIXm6zuoz5dPjfN8oNS",
+    "_type": "visualization",
+    "_source": {
+      "title": "服务器实时握手延迟",
+      "visState": "{\"title\":\"服务器实时握手延迟\",\"type\":\"timelion\",\"params\":{\"type\":\"timelion\",\"expression\":\".es(metric='min:hs-delay',index=\\\"f5-l4-*\\\").label(\\\"最小握手延迟\\\"),.es(metric='max:hs-delay',index=\\\"f5-l4-*\\\").label(\\\"最大握手延迟\\\"),.es(metric='avg:hs-delay',index=\\\"f5-l4-*\\\").label(\\\"平均握手延迟\\\"),\",\"interval\":\"1s\"},\"aggs\":[],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIVKxrfoz5dPjfN8naj",
+    "_type": "visualization",
+    "_source": {
+      "title": "服务器平均首包响应时间",
+      "visState": "{\"title\":\"服务器平均首包响应时间\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"@timestamp per 30 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average init-delay\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average init-delay\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"type\":\"line\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"init-delay\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"memberip.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AWIVGb6qoz5dPjfN8nUs\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIXmi0Uoz5dPjfN8oMu",
+    "_type": "visualization",
+    "_source": {
+      "title": "服务器握手延迟",
+      "visState": "{\"title\":\"服务器握手延迟\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"@timestamp per 5 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average hs-delay\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average hs-delay\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"type\":\"line\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"hs-delay\",\"customLabel\":\"\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"s\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"memberip.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AWIVGb6qoz5dPjfN8nUs\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIVUkZ6oz5dPjfN8nh1",
+    "_type": "visualization",
+    "_source": {
+      "title": "服务器连续响应平均延迟采样（每10包）",
+      "visState": "{\"title\":\"服务器连续响应平均延迟采样（每10包）\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"@timestamp per 5 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average svr-pkts-delay\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average svr-pkts-delay\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"type\":\"line\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"svr-pkts-delay\",\"customLabel\":\"\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"memberip.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AWIVGb6qoz5dPjfN8nUs\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIVXPftoz5dPjfN8nkt",
+    "_type": "visualization",
+    "_source": {
+      "title": "首包延迟热力图",
+      "visState": "{\"title\":\"首包延迟热力图\",\"type\":\"tile_map\",\"params\":{\"mapType\":\"Heatmap\",\"isDesaturated\":true,\"addTooltip\":true,\"heatMaxZoom\":0,\"heatMinOpacity\":0.1,\"heatRadius\":25,\"heatBlur\":15,\"legendPosition\":\"bottomright\",\"mapZoom\":2,\"mapCenter\":[0,0],\"wms\":{\"enabled\":false,\"url\":\"https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer\",\"options\":{\"version\":\"1.3.0\",\"layers\":\"0\",\"format\":\"image/png\",\"transparent\":true,\"attribution\":\"Maps provided by USGS\",\"styles\":\"\"}},\"type\":\"tile_map\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"init-delay\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"geohash_grid\",\"schema\":\"segment\",\"params\":{\"field\":\"geoip.location\",\"autoPrecision\":true,\"useGeocentroid\":true,\"precision\":2}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"mapZoom\":4,\"mapCenter\":[35.99578538642032,104.1064453125]}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AWIVGb6qoz5dPjfN8nUs\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIVUkZ6oz5dPjfN8nh1",
+    "_type": "visualization",
+    "_source": {
+      "title": "服务器连续响应平均延迟采样（每10包）",
+      "visState": "{\"title\":\"服务器连续响应平均延迟采样（每10包）\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"@timestamp per 5 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average svr-pkts-delay\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average svr-pkts-delay\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"type\":\"line\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"svr-pkts-delay\",\"customLabel\":\"\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"memberip.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AWIVGb6qoz5dPjfN8nUs\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIXmi0Uoz5dPjfN8oMu",
+    "_type": "visualization",
+    "_source": {
+      "title": "服务器握手延迟",
+      "visState": "{\"title\":\"服务器握手延迟\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"@timestamp per 5 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average hs-delay\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average hs-delay\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"type\":\"line\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"hs-delay\",\"customLabel\":\"\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"s\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"memberip.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AWIVGb6qoz5dPjfN8nUs\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIVKxrfoz5dPjfN8naj",
+    "_type": "visualization",
+    "_source": {
+      "title": "服务器平均首包响应时间",
+      "visState": "{\"title\":\"服务器平均首包响应时间\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"@timestamp per 30 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average init-delay\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average init-delay\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"type\":\"line\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"init-delay\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"memberip.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AWIVGb6qoz5dPjfN8nUs\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIXm6zuoz5dPjfN8oNS",
+    "_type": "visualization",
+    "_source": {
+      "title": "服务器实时握手延迟",
+      "visState": "{\"title\":\"服务器实时握手延迟\",\"type\":\"timelion\",\"params\":{\"type\":\"timelion\",\"expression\":\".es(metric='min:hs-delay',index=\\\"f5-l4-*\\\").label(\\\"最小握手延迟\\\"),.es(metric='max:hs-delay',index=\\\"f5-l4-*\\\").label(\\\"最大握手延迟\\\"),.es(metric='avg:hs-delay',index=\\\"f5-l4-*\\\").label(\\\"平均握手延迟\\\"),\",\"interval\":\"1s\"},\"aggs\":[],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AV-YzgFzgNN0wcwlSZ9k",
+    "_type": "visualization",
+    "_source": {
+      "title": "实时服务器响应延迟",
+      "visState": "{\"title\":\"实时服务器响应延迟\",\"type\":\"line\",\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"@timestamp per 5 seconds\"},\"type\":\"category\"}],\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"},\"valueAxis\":null},\"legendPosition\":\"top\",\"seriesParams\":[{\"data\":{\"id\":\"2\",\"label\":\"Avg. Response/Server\"},\"drawLinesBetweenPoints\":true,\"interpolate\":\"cardinal\",\"lineWidth\":2,\"mode\":\"stacked\",\"show\":true,\"showCircles\":true,\"type\":\"line\",\"valueAxis\":\"ValueAxis-1\"}],\"times\":[],\"type\":\"histogram\",\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Avg. Response/Server\"},\"type\":\"value\"}]},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"response_ms\",\"customLabel\":\"Avg. Response/Server\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"s\",\"customInterval\":\"1m\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"server.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"2\",\"customLabel\":\"\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AV-YYJCYgNN0wcwlSZzP\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIVWQeSoz5dPjfN8nji",
+    "_type": "visualization",
+    "_source": {
+      "title": "应用实时服务器连续响应延迟采样（每10包）",
+      "visState": "{\"title\":\"应用实时服务器连续响应延迟采样（每10包）\",\"type\":\"timelion\",\"params\":{\"type\":\"timelion\",\"expression\":\".es(metric='min:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"最小连续响应延迟\\\"),.es(metric='max:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"最大连续响应延迟\\\"),.es(metric='avg:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"平均连续响应延迟\\\"),\",\"interval\":\"1s\"},\"aggs\":[],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIVHiN1oz5dPjfN8nXZ",
+    "_type": "visualization",
+    "_source": {
+      "title": "平均首包响应时间",
+      "visState": "{\"title\":\"平均首包响应时间\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"/Second\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Avg.init.pkts.delay\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Avg.init.pkts.delay\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"type\":\"line\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"init-delay\",\"customLabel\":\"Avg.init.pkts.delay\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{},\"customLabel\":\"/Second\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"memberip.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AWIVGb6qoz5dPjfN8nUs\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
     "_id": "AWIVJDsKoz5dPjfN8nZx",
     "_type": "visualization",
     "_source": {
@@ -42,11 +238,11 @@
     }
   },
   {
-    "_id": "AWIVWQeSoz5dPjfN8nji",
+    "_id": "AWIXm6zuoz5dPjfN8oNS",
     "_type": "visualization",
     "_source": {
-      "title": "应用实时服务器连续响应延迟采样（每10包）",
-      "visState": "{\"title\":\"应用实时服务器连续响应延迟采样（每10包）\",\"type\":\"timelion\",\"params\":{\"type\":\"timelion\",\"expression\":\".es(metric='min:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"最小连续响应延迟\\\"),.es(metric='max:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"最大连续响应延迟\\\"),.es(metric='avg:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"平均连续响应延迟\\\"),\",\"interval\":\"1s\"},\"aggs\":[],\"listeners\":{}}",
+      "title": "服务器实时握手延迟",
+      "visState": "{\"title\":\"服务器实时握手延迟\",\"type\":\"timelion\",\"params\":{\"type\":\"timelion\",\"expression\":\".es(metric='min:hs-delay',index=\\\"f5-l4-*\\\").label(\\\"最小握手延迟\\\"),.es(metric='max:hs-delay',index=\\\"f5-l4-*\\\").label(\\\"最大握手延迟\\\"),.es(metric='avg:hs-delay',index=\\\"f5-l4-*\\\").label(\\\"平均握手延迟\\\"),\",\"interval\":\"1s\"},\"aggs\":[],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
@@ -56,11 +252,11 @@
     }
   },
   {
-    "_id": "AWIVUkZ6oz5dPjfN8nh1",
+    "_id": "AWIXmi0Uoz5dPjfN8oMu",
     "_type": "visualization",
     "_source": {
-      "title": "服务器连续响应平均延迟采样（每10包）",
-      "visState": "{\"title\":\"服务器连续响应平均延迟采样（每10包）\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"@timestamp per 5 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average svr-pkts-delay\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average svr-pkts-delay\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"type\":\"line\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"svr-pkts-delay\",\"customLabel\":\"\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"memberip.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "title": "服务器握手延迟",
+      "visState": "{\"title\":\"服务器握手延迟\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"@timestamp per 5 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average hs-delay\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average hs-delay\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"type\":\"line\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"hs-delay\",\"customLabel\":\"\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"s\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"memberip.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
@@ -89,6 +285,34 @@
     "_source": {
       "title": "应用实时首包响应时间",
       "visState": "{\"title\":\"应用实时首包响应时间\",\"type\":\"timelion\",\"params\":{\"type\":\"timelion\",\"expression\":\".es(metric='min:init-delay',index=\\\"f5-l4-*\\\").label(\\\"最小首包响应延迟\\\"),.es(metric='max:init-delay',index=\\\"f5-l4-*\\\").label(\\\"最大首包响应延迟\\\"),.es(metric='avg:init-delay',index=\\\"f5-l4-*\\\").label(\\\"平均首包响应延迟\\\"),\",\"interval\":\"1s\"},\"aggs\":[],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIVUkZ6oz5dPjfN8nh1",
+    "_type": "visualization",
+    "_source": {
+      "title": "服务器连续响应平均延迟采样（每10包）",
+      "visState": "{\"title\":\"服务器连续响应平均延迟采样（每10包）\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"@timestamp per 5 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average svr-pkts-delay\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average svr-pkts-delay\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"type\":\"line\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"svr-pkts-delay\",\"customLabel\":\"\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"memberip.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"AWIVGb6qoz5dPjfN8nUs\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWIVWQeSoz5dPjfN8nji",
+    "_type": "visualization",
+    "_source": {
+      "title": "应用实时服务器连续响应延迟采样（每10包）",
+      "visState": "{\"title\":\"应用实时服务器连续响应延迟采样（每10包）\",\"type\":\"timelion\",\"params\":{\"type\":\"timelion\",\"expression\":\".es(metric='min:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"最小连续响应延迟\\\"),.es(metric='max:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"最大连续响应延迟\\\"),.es(metric='avg:svr-pkts-delay',index=\\\"f5-l4-*\\\").label(\\\"平均连续响应延迟\\\"),\",\"interval\":\"1s\"},\"aggs\":[],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
