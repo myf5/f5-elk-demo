@@ -14,6 +14,8 @@
 
 #### irule：
 
+最新版本号：V1.1
+
 ```tcl
 when RULE_INIT {
 # V1.1. 
