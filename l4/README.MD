@@ -14,11 +14,11 @@
 
 #### irule：
 
-最新版本号：V1.1
+最新版本号：V1.1.1@2018.3.14
 
 ```tcl
 when RULE_INIT {
-# V1.1. 
+# V1.1.1 
 #Pls check https://github.com/myf5/f5-elk-demo/l4 for updated version
 #This irule work ONLY FOR L4 TYPE VS,DON NOT USE FOR STD VS
 #Any question pls create issue on the github,Will be best effort support. Welcome PR if you had enhenced/fixed it.
@@ -30,7 +30,7 @@ set static::interval 5
 #You need create a LTM pool named as below pool name, here is logstash-pool_8515
 set static::hslpool "logstash-pool_8515"
 # set it to 1 in case you need debug
-set static::debug 0
+set static::debug 1
 }
 when CLIENT_ACCEPTED {
     set cd 0
@@ -42,7 +42,7 @@ when CLIENT_ACCEPTED {
     set client_remote "[IP::client_addr] [TCP::client_port]"
     set client_local  "[IP::local_addr clientside] [TCP::local_port clientside]"
     if {($static::debug == 1)} {
-        log local0. "$client_remote $client_local SYN is coming. [clock clicks -milliseconds]"
+        log local0. "[virtual name] $client_remote $client_local SYN is coming. [clock clicks -milliseconds]"
     }
 }
 
@@ -53,7 +53,7 @@ when CLIENT_DATA {
     set server_data_time_last 0
     set client_data_time [clock clicks -milliseconds]
     if {($static::debug == 1)} {
-        log local0. "$client_remote $client_local cd number: $cd, Client data fired,client data time is $client_data_time"
+        log local0. "[virtual name] $client_remote $client_local cd number: $cd, Client data fired,client data time is $client_data_time"
     }
     if {($hsf == 1)}{
         set cd 0
@@ -69,10 +69,10 @@ when SERVER_DATA {
     set server_remote "[IP::server_addr] [TCP::server_port]"
     if {($hsf == 1)}{
         if {($static::debug == 1)} {
-            log local0. "$client_remote $client_local $server_local $server_remote sd number: $sd,Server data fired,This is TCP 3HS! server data time is $server_data_time"
-            log local0. "The 3HS delay is [expr {$server_data_time-$client_data_time}]"
+            log local0. "[virtual name] $client_remote $client_local $server_local $server_remote sd number: $sd,Server data fired,This is TCP 3HS! server data time is $server_data_time"
+            log local0. "[virtual name] The 3HS delay is [expr {$server_data_time-$client_data_time}]"
         }
-        set elkdata "$client_remote $client_local $server_local $server_remote HS-delay [expr {$server_data_time-$client_data_time}]\n"
+        set elkdata "[virtual name] $client_remote $client_local $server_local $server_remote HS-delay [expr {$server_data_time-$client_data_time}]\n"
         HSL::send $hsl $elkdata
         set hsf 0
         set cd 0
@@ -80,15 +80,16 @@ when SERVER_DATA {
         set cdf 0
     } else {
         if {($static::debug == 1)} {
-            log local0. "$client_remote $client_local $server_local $server_remote sd number: $sd, Server data fired,server data time is $server_data_time"
+            log local0. "[virtual name] $client_remote $client_local $server_local $server_remote sd number: $sd, Server data fired,server data time is $server_data_time"
         }
         if {($cd >= 1) and ($cdf == 1) }{
         # If client sends several continuous data, then server respond. The delay will be the time between the server data and the last client data
         # If it is a big client data, this may cause false positive. You can check client data number as reference.
+        # If the cd number is bigger (like > 10), then you can safely ignore it if the delay value is bigger.
             if {($static::debug == 1)} {
-                log local0. "$client_remote $client_local $server_local $server_remote sd number: $sd, ========The delay of initial response packet: [expr {$server_data_time-$client_data_time}]"
+                log local0. "[virtual name] $client_remote $client_local $server_local $server_remote sd number: $sd, ========The delay of initial response packet: [expr {$server_data_time-$client_data_time}]"
             }
-            set elkdata "$client_remote $client_local $server_local $server_remote cdnumber $cd init-delay [expr {$server_data_time-$client_data_time}]\n"
+            set elkdata "[virtual name] $client_remote $client_local $server_local $server_remote cdnumber $cd init-delay [expr {$server_data_time-$client_data_time}]\n"
             HSL::send $hsl $elkdata
             set cd 0
             set sd 0
@@ -97,9 +98,9 @@ when SERVER_DATA {
         if {($sdf > 1) and ($cdf == 0) and ([expr {$sd%$static::interval}] == 0)}{
             set sd_latency [expr {$server_data_time-$server_data_time_last}]
             if {($static::debug == 1)} {
-                log local0. "$client_remote $client_local $server_local $server_remote .========server data delay from the last server data:$sd_latency"
+                log local0. "[virtual name] $client_remote $client_local $server_local $server_remote .========server data delay from the last server data:$sd_latency"
             }
-            set elkdata "$client_remote $client_local $server_local $server_remote svr-pkts-delay $sd_latency\n"
+            set elkdata "[virtual name] $client_remote $client_local $server_local $server_remote svr-pkts-delay $sd_latency\n"
             HSL::send $hsl $elkdata
          }
         set skip 0
@@ -242,7 +243,7 @@ when SERVER_DATA {
   filter {
     if [message]=~ 'init-delay' {
         grok {
-          match => { "message" => "%{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} cdnumber %{NUMBER:cdnumber:int} init-delay %{NUMBER:init-delay:int}" }
+          match => { "message" => "%{DATA:virtual_name} %{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} cdnumber %{NUMBER:cdnumber:int} init-delay %{NUMBER:init-delay:int}" }
       } 
 
     } 
@@ -250,7 +251,7 @@ when SERVER_DATA {
     if [message]=~ 'HS-delay' { 
 
         grok {
-          match => { "message" => "%{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} HS-delay %{NUMBER:hs-delay:int}" }
+          match => { "message" => "%{DATA:virtual_name} %{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} HS-delay %{NUMBER:hs-delay:int}" }
       }
 
 
@@ -258,7 +259,7 @@ when SERVER_DATA {
 
    if [message]=~ 'svr-pkts-delay'  {
         grok {
-          match => { "message" => "%{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} svr-pkts-delay %{NUMBER:svr-pkts-delay:int}" }
+          match => { "message" => "%{DATA:virtual_name} %{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} svr-pkts-delay %{NUMBER:svr-pkts-delay:int}" }
       }
      }
     geoip {
@@ -277,6 +278,11 @@ when SERVER_DATA {
     }
    }
   }
+  ```
+
+  ​
+
+
   ```
 
   注意：如果你已经在使用其它logstash的配置文件，即同目录下还有其它配置文件，请确保配置文件中的output部分配置了正确的type条件判断，否则可能出现数据被发送到不同的index里。在本例中包含以下两个文件：
