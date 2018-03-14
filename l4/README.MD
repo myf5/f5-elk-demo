@@ -30,7 +30,7 @@ set static::interval 5
 #You need create a LTM pool named as below pool name, here is logstash-pool_8515
 set static::hslpool "logstash-pool_8515"
 # set it to 1 in case you need debug
-set static::debug 1
+set static::debug 0
 }
 when CLIENT_ACCEPTED {
     set cd 0
