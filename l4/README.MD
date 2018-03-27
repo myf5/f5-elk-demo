@@ -238,6 +238,7 @@ when SERVER_DATA {
       type => 'f5-l4'
     }
   }
+  ```
 
 
   filter {
@@ -249,12 +250,12 @@ when SERVER_DATA {
     } 
     
     if [message]=~ 'HS-delay' { 
-
+    
         grok {
           match => { "message" => "%{DATA:virtual_name} %{IP:clientip} %{NUMBER:clientport} %{IP:vsip} %{NUMBER:vsport} %{IP:snatip} %{NUMBER:snatport} %{IP:memberip} %{NUMBER:memberport} HS-delay %{NUMBER:hs-delay:int}" }
       }
 
-
+   } 
    } 
 
    if [message]=~ 'svr-pkts-delay'  {
@@ -367,4 +368,9 @@ when SERVER_DATA {
 * 如果你修复或增强了irule功能，欢迎提交PR
 * **在生产系统使用时，请务必提前做好测试，观察irule可能对性能产生的影响，并观察logstash服务器性能状态（连接，磁盘存储）**.上述示例并未执行性能测试。
 * **请在具有PVA加速的设备上，验证上述irule有效性。如效果不能满足要求，你可能需要考虑关闭L4 VS的PVA加速功能**
+
+
+#### Known Iussues：
+
+* 已知在采样多个响应数据包间隔延迟时，会出现较大值，尚未跟踪是否为期望结果
 
