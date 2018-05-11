@@ -2,7 +2,7 @@
 
 * 按照F5 passive 模式配置基本配置（镜像，网络，vs等）
 
-* 关联以下irule
+* 关联以下irule 【该irule目前不是最终版本，等待update】
 
   ```tcl
   when CLIENT_ACCEPTED {
