@@ -1,5 +1,7 @@
 ### iRule DNS可视化方法：
 
+方法有关的说明文档请访问[查看文章](https://www.myf5.net/post/2581.htm)
+
 iRule
 
 将以下iRule应用在DNS的listener VS上，GTM/DNS系统上配置一个logstash-pool的 LTM pool（如果你发现没有地方配置LTM Pool，联系F5工程师）：
