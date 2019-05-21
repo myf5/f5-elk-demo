@@ -238,8 +238,6 @@ when SERVER_DATA {
     }
   }
  
-
-
   filter {
     if [message]=~ 'init-delay' {
         grok {
@@ -267,8 +265,6 @@ when SERVER_DATA {
           target => "geoip"
       }
   }
-
-
 
   output {
    if [type] == "f5-l4" {
