@@ -132,7 +132,6 @@ when SERVER_DATA {
 * 拷贝以下elasticsearch template文件，并执行命令更新：
 
   ```json
-  [root@F5ELK-NODE01 confbak]# cat f5-l4_template.json 
   {
   "template": "f5-l4-*",
   "mappings": {
@@ -238,7 +237,7 @@ when SERVER_DATA {
       type => 'f5-l4'
     }
   }
-  ```
+ 
 
 
   filter {
